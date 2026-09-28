@@ -26,7 +26,7 @@ conventions:
 
 - `.env.example` — copy to `.env` and set `PORT` (appmotel sets this itself on deploy)
 - `install.sh` — installs dependencies
-- `Procfile` — `web: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`
+- `Procfile` — `web: python -m uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT` (`python -m` because appmotel only puts the venv python, not `.venv/bin`, on the path)
 - `GET /health` — health check endpoint
 
 Deploy with `appmo add storage-finder <repo-url> main`.
