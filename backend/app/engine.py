@@ -6,7 +6,7 @@ from .schemas import (
     BackupNeed,
     Classification,
     DataVolume,
-    Department,
+    Cost,
     FilterResponse,
     PartialAnswers,
     Purpose,
@@ -16,12 +16,12 @@ from .schemas import (
 )
 
 CHOICES = {
-    "department": get_args(Department),
     "classification": get_args(Classification),
     "audience": get_args(Audience),
     "volume": get_args(DataVolume),
     "backup": get_args(BackupNeed),
     "purpose": get_args(Purpose),
+    "cost": get_args(Cost),
 }
 
 VOLUME_LABELS = {
@@ -47,7 +47,7 @@ def recommend(answers: QuestionnaireAnswers) -> RecommendationResponse:
     excluded_count = 0
 
     for option in STORAGE_OPTIONS:
-        if option["department_restricted"] and option["department_restricted"] != answers.department:
+        if answers.cost != "either" and option["pricing"] != answers.cost:
             excluded_count += 1
             continue
 
@@ -69,6 +69,11 @@ def recommend(answers: QuestionnaireAnswers) -> RecommendationResponse:
             warnings.append(
                 f"{option['short_name']} can hold {answers.classification} data, but {review} first."
             )
+
+        if answers.cost == "quota":
+            reasons.append("No charge; it fits within a quota.")
+        elif answers.cost == "paid":
+            reasons.append(f"Pricing: {option['cost']}.")
 
         if answers.audience in option["audiences"]:
             score += 20
@@ -114,8 +119,8 @@ def recommend(answers: QuestionnaireAnswers) -> RecommendationResponse:
 
 def fits(option: dict, answers: dict) -> bool:
     """True if the option satisfies every answer given (unanswered = no constraint)."""
-    dept = answers.get("department")
-    if dept and option["department_restricted"] and option["department_restricted"] != dept:
+    cost = answers.get("cost")
+    if cost in ("quota", "paid") and option["pricing"] != cost:
         return False
     cls = answers.get("classification")
     if cls and option["classification_status"][cls] == "no":

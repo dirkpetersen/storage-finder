@@ -189,7 +189,7 @@ function altCard(rec) {
 function excludedNote(n) {
   if (!n) return "";
   const many = n > 1;
-  const limit = state.answers.department === "general" ? ` or ${many ? "are" : "is"} limited to engineering` : "";
+  const limit = state.answers.cost === "either" ? "" : " or your pricing choice";
   return `<p class="excluded">${n} service${many ? "s were" : " was"} left out because ${many ? "they aren't" : "it isn't"} available for ${state.answers.classification} data${limit}.</p>`;
 }
 
@@ -209,8 +209,8 @@ async function showResults() {
     return;
   }
   const [best, ...rest] = data.recommendations;
-  const shown = rest.slice(0, 4);
-  const hidden = rest.slice(4);
+  const shown = rest.slice(0, 6);
+  const hidden = rest.slice(6);
 
   const chips = state.steps
     .map((s, i) => {
@@ -281,7 +281,7 @@ async function toggleCompare() {
     <table class="cmp">
       <thead><tr>
         <th>Service</th><th>Predominant technology / vendor</th><th>Unrestricted</th><th>Sensitive</th><th>Confidential</th>
-        <th>Capacity</th><th>Cost</th><th>Backup</th><th>Available to</th>
+        <th>Capacity</th><th>Cost</th><th>Backup</th>
       </tr></thead>
       <tbody>${options
         .map(
@@ -294,7 +294,6 @@ async function toggleCompare() {
         <td>${o.capacity_label}</td>
         <td>${o.cost}</td>
         <td>${o.backup_available ? "Yes" : "No"}</td>
-        <td>${o.department_restricted ? "Engineering only" : "Everyone"}</td>
       </tr>`
         )
         .join("")}</tbody>

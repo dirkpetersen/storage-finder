@@ -81,7 +81,6 @@ STORAGE_OPTIONS = [
         "capacity_label": "Generous individual quota, pooled group folders",
         "backup_available": True,
         "backup_note": "Versioned automatically; deleted files are recoverable for a limited time.",
-        "department_restricted": None,
         "classification_status": {
             "unrestricted": "ok",
             "sensitive": "ok",
@@ -109,7 +108,6 @@ STORAGE_OPTIONS = [
         "capacity_label": "Institution-defined quota (typically 1 TB)",
         "backup_available": True,
         "backup_note": "File versioning and a recoverable recycle bin are built in.",
-        "department_restricted": None,
         "classification_status": {
             "unrestricted": "ok",
             "sensitive": "ok",
@@ -137,7 +135,6 @@ STORAGE_OPTIONS = [
         "capacity_label": "Large pooled quota (100 GB+ per site)",
         "backup_available": True,
         "backup_note": "File versioning and a recoverable recycle bin are built in.",
-        "department_restricted": None,
         "classification_status": {
             "unrestricted": "ok",
             "sensitive": "ok",
@@ -166,7 +163,6 @@ STORAGE_OPTIONS = [
         "capacity_label": "Scalable from TB to PB",
         "backup_available": True,
         "backup_note": "Snapshot-based recovery; ask your research computing team about full backup add-ons.",
-        "department_restricted": None,
         "classification_status": {
             "unrestricted": "ok",
             "sensitive": "ok",
@@ -194,7 +190,6 @@ STORAGE_OPTIONS = [
         "capacity_label": "Scalable from TB to PB",
         "backup_available": True,
         "backup_note": "Nightly backups included.",
-        "department_restricted": None,
         "classification_status": {
             "unrestricted": "ok",
             "sensitive": "ok",
@@ -222,103 +217,17 @@ STORAGE_OPTIONS = [
         "capacity_label": "Scalable to multiple PB",
         "backup_available": False,
         "backup_note": "Data redundancy via erasure coding, not a traditional backup — keep a second copy of anything irreplaceable.",
-        "department_restricted": None,
         "classification_status": {
             "unrestricted": "ok",
             "sensitive": "ok",
             "confidential": "review",
         },
         "audiences": ["individual", "team"],
-        "volumes": ["large", "xlarge"],
+        "volumes": ["medium", "large", "xlarge"],
         "purposes": ["archive"],
         "pros": ["Lowest cost per TB", "Scales to very large datasets", "Good backup/archive target"],
         "cons": ["Higher latency, not for active compute", "Not a substitute for real backup", "Confidential data needs IT review first"],
         "accent": "#4A4A48",
-    },
-    {
-        "id": "eng_home",
-        "name": "Engineering Home Directory",
-        "short_name": "Home Directory",
-        "vendor": "—",
-        "category": "College of Engineering storage",
-        "tagline": "Your personal network drive on every engineering lab computer.",
-        "description": (
-            "An individual network home directory available on all College of "
-            "Engineering lab computers and, via VPN, personal devices. Commonly used "
-            "for software builds and Linux configuration files."
-        ),
-        "cost": "Free",
-        "capacity_label": "15 GB per person",
-        "backup_available": True,
-        "backup_note": "Backed up hourly.",
-        "department_restricted": "engineering",
-        "classification_status": {
-            "unrestricted": "ok",
-            "sensitive": "ok",
-            "confidential": "review",
-        },
-        "audiences": ["individual"],
-        "volumes": ["small"],
-        "purposes": ["everyday"],
-        "pros": ["Hourly backups", "Available on every lab machine", "Good for dotfiles and small personal files"],
-        "cons": ["Small 15 GB quota", "Individual use only"],
-        "accent": "#1E7C3B",
-    },
-    {
-        "id": "eng_project",
-        "name": "Engineering Project Space",
-        "short_name": "Project Space",
-        "vendor": "—",
-        "category": "College of Engineering storage",
-        "tagline": "Shared, backed-up storage for a project or research group.",
-        "description": (
-            "Network-wide shared disk space for a project or group, sized to the team's "
-            "needs, with regular backups included."
-        ),
-        "cost": "Free",
-        "capacity_label": "25 GB to 5 TB",
-        "backup_available": True,
-        "backup_note": "Backed up regularly.",
-        "department_restricted": "engineering",
-        "classification_status": {
-            "unrestricted": "ok",
-            "sensitive": "ok",
-            "confidential": "review",
-        },
-        "audiences": ["individual", "team"],
-        "volumes": ["small", "medium", "large"],
-        "purposes": ["everyday"],
-        "pros": ["Backed up automatically", "Sized to fit your project", "Supports software compilation"],
-        "cons": ["Engineering department only", "Not tuned for HPC-scale throughput"],
-        "accent": "#1E7C3B",
-    },
-    {
-        "id": "eng_archive",
-        "name": "Engineering Archival Storage",
-        "short_name": "Archival (\"Attic\")",
-        "vendor": "—",
-        "category": "College of Engineering storage",
-        "tagline": "Long-term, low-cost storage for data you rarely touch.",
-        "description": (
-            "Slower archival space for project data that has to be retained but is no "
-            "longer actively used. Not backed up — treat it as the archive copy itself."
-        ),
-        "cost": "Free",
-        "capacity_label": "25 GB to 5 TB",
-        "backup_available": False,
-        "backup_note": "No backups — this is long-term archival storage, not a working copy.",
-        "department_restricted": "engineering",
-        "classification_status": {
-            "unrestricted": "ok",
-            "sensitive": "ok",
-            "confidential": "review",
-        },
-        "audiences": ["individual", "team"],
-        "volumes": ["small", "medium", "large"],
-        "purposes": ["archive"],
-        "pros": ["Free long-term archive", "Good for closed-out project data"],
-        "cons": ["No backup — slower to retrieve", "Engineering department only"],
-        "accent": "#1E7C3B",
     },
     {
         "id": 'shared_drive',
@@ -334,7 +243,6 @@ STORAGE_OPTIONS = [
         "capacity_label": "Set by your department's IT support",
         "backup_available": True,
         "backup_note": 'Backed up by your IT support team; ask about the schedule and retention.',
-        "department_restricted": None,
         "classification_status": {"unrestricted": 'ok', "sensitive": 'ok', "confidential": 'review'},
         "audiences": ['individual', 'team'],
         "volumes": ['small', 'medium', 'large'],
@@ -357,7 +265,6 @@ STORAGE_OPTIONS = [
         "capacity_label": 'Institution-defined quota',
         "backup_available": True,
         "backup_note": 'Version history; deleted files recoverable for a limited time.',
-        "department_restricted": None,
         "classification_status": {"unrestricted": 'ok', "sensitive": 'ok', "confidential": 'no'},
         "audiences": ['individual', 'team', 'external'],
         "volumes": ['small', 'medium'],
@@ -380,36 +287,12 @@ STORAGE_OPTIONS = [
         "capacity_label": 'Workspace limits apply',
         "backup_available": False,
         "backup_note": 'Not a backup. Messages and files may expire under workspace retention rules.',
-        "department_restricted": None,
         "classification_status": {"unrestricted": 'ok', "sensitive": 'no', "confidential": 'no'},
         "audiences": ['team'],
         "volumes": ['small'],
         "purposes": ['everyday'],
         "pros": ['Fast team communication', 'Easy to drop a file into a conversation'],
         "cons": ['Unrestricted data only', 'Not a place to keep files long term'],
-        "accent": '#4A154B',
-    },
-    {
-        "id": 'slack_grid',
-        "name": 'Slack Enterprise Grid (College of Engineering)',
-        "short_name": 'Slack Grid',
-        "vendor": 'Slack',
-        "category": 'Messaging and chat',
-        "kind": 'application',
-        "specialty": 'Team chat, not file storage',
-        "tagline": 'College of Engineering team chat, approved for sensitive data.',
-        "description": "The College of Engineering's Enterprise Grid workspace, approved for unrestricted and sensitive data.",
-        "cost": 'Free (college licensed)',
-        "capacity_label": 'Workspace limits apply',
-        "backup_available": False,
-        "backup_note": 'Not a backup. Messages and files may expire under workspace retention rules.',
-        "department_restricted": 'engineering',
-        "classification_status": {"unrestricted": 'ok', "sensitive": 'ok', "confidential": 'no'},
-        "audiences": ['team'],
-        "volumes": ['small'],
-        "purposes": ['everyday'],
-        "pros": ['Approved for sensitive data', 'Built for engineering teams'],
-        "cons": ['Engineering only', 'Not approved for confidential data', 'Not a file archive'],
         "accent": '#4A154B',
     },
     {
@@ -426,7 +309,6 @@ STORAGE_OPTIONS = [
         "capacity_label": 'Survey response limits apply',
         "backup_available": True,
         "backup_note": 'Managed by the platform; export final data to long-term storage.',
-        "department_restricted": None,
         "classification_status": {"unrestricted": 'ok', "sensitive": 'ok', "confidential": 'review'},
         "audiences": ['individual', 'team', 'external'],
         "volumes": ['small', 'medium'],
@@ -449,7 +331,6 @@ STORAGE_OPTIONS = [
         "capacity_label": 'Set by the records program',
         "backup_available": True,
         "backup_note": 'Managed centrally as an official records system.',
-        "department_restricted": None,
         "classification_status": {"unrestricted": 'ok', "sensitive": 'ok', "confidential": 'review'},
         "audiences": ['team'],
         "volumes": ['small', 'medium'],
@@ -472,7 +353,6 @@ STORAGE_OPTIONS = [
         "capacity_label": 'Course file limits apply',
         "backup_available": True,
         "backup_note": 'Managed by the platform for the life of the course.',
-        "department_restricted": None,
         "classification_status": {"unrestricted": 'ok', "sensitive": 'ok', "confidential": 'no'},
         "audiences": ['team', 'external'],
         "volumes": ['small', 'medium'],
@@ -495,7 +375,6 @@ STORAGE_OPTIONS = [
         "capacity_label": 'Envelope limits apply',
         "backup_available": True,
         "backup_note": 'Completed documents are retained by the service.',
-        "department_restricted": None,
         "classification_status": {"unrestricted": 'ok', "sensitive": 'ok', "confidential": 'ok'},
         "audiences": ['team', 'external'],
         "volumes": ['small'],
@@ -520,7 +399,6 @@ STORAGE_OPTIONS = [
         "capacity_label": "Elastic — scales to any size",
         "backup_available": True,
         "backup_note": "Depends entirely on how you configure it — backup is your responsibility.",
-        "department_restricted": None,
         "classification_status": {
             "unrestricted": "ok",
             "sensitive": "review",
@@ -549,7 +427,6 @@ STORAGE_OPTIONS = [
         "capacity_label": "Whatever your device has free",
         "backup_available": False,
         "backup_note": "No backup — you are entirely on your own if the device fails.",
-        "department_restricted": None,
         "classification_status": {
             "unrestricted": "ok",
             "sensitive": "no",
@@ -567,8 +444,12 @@ STORAGE_OPTIONS = [
 
 # Network-share style services: the source table says "check with your IT support".
 for _o in STORAGE_OPTIONS:
-    if _o["id"] in {"shared_drive", "tier1", "tier2", "tier3", "eng_home", "eng_project", "eng_archive"}:
+    if _o["id"] in {"shared_drive", "tier1", "tier2", "tier3"}:
         _o["review_note"] = "check with your IT support"
+
+PAID_IDS = {"tier1", "tier2", "tier3", "cloud_paid"}
+for _o in STORAGE_OPTIONS:
+    _o["pricing"] = "paid" if _o["id"] in PAID_IDS else "quota"
 
 # Every system on the university data classification page ("What data can I keep where?").
 # kind "network" rows carry text instead of yes/review/no.
@@ -591,7 +472,6 @@ CLASSIFICATION_MATRIX = [
      "note": "Confidential: check with your IT support."},
     {"name": "Qualtrics", "unrestricted": "ok", "sensitive": "ok", "confidential": "review"},
     {"name": "Slack", "unrestricted": "ok", "sensitive": "no", "confidential": "no"},
-    {"name": "Slack Enterprise Grid (College of Engineering only)", "unrestricted": "ok", "sensitive": "ok", "confidential": "no"},
     {"name": "WordPress", "unrestricted": "ok", "sensitive": "no", "confidential": "no"},
     {"name": "VPN", "unrestricted": "text:Not required", "sensitive": "text:Recommended", "confidential": "text:Required"},
 ]

@@ -2,7 +2,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-Department = Literal["general", "engineering"]
+Cost = Literal["quota", "paid", "either"]
 Classification = Literal["unrestricted", "sensitive", "confidential"]
 Audience = Literal["individual", "team", "external"]
 DataVolume = Literal["small", "medium", "large", "xlarge"]
@@ -11,21 +11,21 @@ Purpose = Literal["everyday", "hpc", "archive"]
 
 
 class QuestionnaireAnswers(BaseModel):
-    department: Department
     classification: Classification
     audience: Audience
     volume: DataVolume
     backup: BackupNeed
     purpose: Purpose
+    cost: Cost
 
 
 class PartialAnswers(BaseModel):
-    department: Department | None = None
     classification: Classification | None = None
     audience: Audience | None = None
     volume: DataVolume | None = None
     backup: BackupNeed | None = None
     purpose: Purpose | None = None
+    cost: Cost | None = None
 
 
 class StorageOption(BaseModel):
@@ -43,7 +43,7 @@ class StorageOption(BaseModel):
     capacity_label: str
     backup_available: bool
     backup_note: str
-    department_restricted: Department | None = None
+    pricing: Literal["quota", "paid"]
     classification_status: dict[Classification, Literal["ok", "review", "no"]]
     audiences: list[Audience]
     volumes: list[DataVolume]

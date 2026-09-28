@@ -21,6 +21,8 @@ const ICONS = {
   print: '<path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/>',
   x: '<path d="M6 6l12 12M18 6L6 18"/>',
   info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/>',
+  gauge: '<path d="M4 18a9 9 0 1116 0"/><path d="M12 18l4-6"/>',
+  tag: '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/>',
   star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
 };
 
@@ -30,16 +32,6 @@ function icon(name) {
 
 function buildSteps(cls) {
   return [
-    {
-      key: "department",
-      label: "Where",
-      title: "Where do you work?",
-      sub: "College of Engineering staff and students have a few extra storage services to choose from.",
-      options: [
-        { value: "general", icon: "building", title: "General university", chip: "General university", desc: "Show services open to everyone at the university." },
-        { value: "engineering", icon: "cog", title: "College of Engineering", chip: "College of Engineering", desc: "Include engineering-only home, project, and archive space." },
-      ],
-    },
     {
       key: "classification",
       label: "Data",
@@ -96,6 +88,17 @@ function buildSteps(cls) {
         { value: "everyday", icon: "folder", title: "Everyday files", chip: "Everyday files", desc: "Documents, presentations, and day-to-day work." },
         { value: "hpc", icon: "bolt", title: "Active research computing", chip: "Research computing", desc: "Data used by compute jobs and analysis pipelines." },
         { value: "archive", icon: "archive", title: "Long-term archive", chip: "Long-term archive", desc: "Data I must keep but rarely open." },
+      ],
+    },
+    {
+      key: "cost",
+      label: "Cost",
+      title: "How do you want to pay?",
+      sub: "You can stay entirely within the free quota the university provides, or buy the capacity you need.",
+      options: [
+        { value: "quota", icon: "gauge", title: "Free, within a quota", chip: "Free within a quota", desc: "No charges. Only show services that fit inside a free quota." },
+        { value: "paid", icon: "tag", title: "Paid capacity", chip: "Paid capacity", desc: "I can pay for what I need. Show the pricing options." },
+        { value: "either", icon: "layers", title: "Show me both", chip: "Free or paid", desc: "Rank free and paid services together.", wizardOnly: true },
       ],
     },
   ];

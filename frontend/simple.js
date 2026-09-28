@@ -38,6 +38,7 @@ function renderPicks() {
       <legend>${s.title}</legend>
       <div class="pick-row">
         ${s.options
+          .filter((o) => !o.wizardOnly)
           .map((o) => {
             const n = state.availability[s.key][o.value];
             const on = state.answers[s.key] === o.value;
@@ -84,7 +85,7 @@ function renderGrid() {
   const rows = [
     ["Best for", (o) => `<span class="strong">${o.tagline}</span>${o.specialty ? `<span class="sub">${o.specialty}</span>` : ""}`],
     ["Technology / vendor", (o) => (o.vendor === "—" ? "Not specified" : o.vendor)],
-    ["Cost", (o) => o.cost],
+    ["Cost", (o) => `<span class="strong">${o.cost}</span><span class="sub">${o.pricing === "paid" ? "Paid capacity" : "Within a free quota"}</span>`, "cost", !!A.cost],
     ["Capacity", (o) => o.capacity_label],
     ["Backup", (o) => `<span class="strong">${o.backup_available ? "Yes" : "No"}</span><span class="sub">${o.backup_note}</span>`, "backup", A.backup === "auto"],
     ["Unrestricted data", (o) => statusHtml(o.classification_status.unrestricted), "classification", A.classification === "unrestricted"],
@@ -93,7 +94,6 @@ function renderGrid() {
     ["Works for", (o) => opts(o, "audiences", LABELS.audiences, "audience"), "audience", !!A.audience],
     ["Data size", (o) => opts(o, "volumes", LABELS.volumes, "volume"), "volume", !!A.volume],
     ["Good for", (o) => opts(o, "purposes", LABELS.purposes, "purpose"), "purpose", !!A.purpose],
-    ["Available to", (o) => (o.department_restricted ? "College of Engineering only" : "Everyone"), "department", !!A.department],
     ["Pros", (o) => list(o.pros)],
     ["Cons", (o) => list(o.cons)],
   ];

@@ -3,9 +3,9 @@
 Which storage should I pick
 
 A small self-service tool that helps university users pick the right storage
-service (Box, OneDrive, SharePoint, Tier 1/2/3 research storage, and College
-of Engineering storage) based on data classification, audience, size, backup
-needs, and workload.
+service (Box, OneDrive, SharePoint, shared drives, Tier 1/2/3 research storage,
+and more) based on data classification, audience, size, backup needs, workload,
+and whether to stay within a free quota or pay.
 
 ## Run it
 
