@@ -37,13 +37,15 @@ class StorageOption(BaseModel):
     kind: Literal["storage", "application"] = "storage"
     specialty: str | None = None
     review_note: str | None = None
+    eligibility: str | None = None
+    how_to: str | None = None
     tagline: str
     description: str
     cost: str
     capacity_label: str
     backup_available: bool
     backup_note: str
-    pricing: Literal["quota", "paid"]
+    pricing: Literal["quota", "paid", "both"]
     classification_status: dict[Classification, Literal["ok", "review", "no"]]
     audiences: list[Audience]
     volumes: list[DataVolume]

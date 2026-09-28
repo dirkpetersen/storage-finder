@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Simple finder — Storage Finder</title>
-<meta name="description" content="Pick what applies to you and compare university storage services side by side.">
+<title>Simple — Storage Finder</title>
+<meta name="description" content="Browse every university storage service, select the ones you like, and compare them side by side.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
@@ -20,27 +20,50 @@
       <span class="brand-text">Storage Finder<small>university.edu</small></span>
     </a>
     <nav class="topnav" aria-label="Main">
-      <a href="/">Home</a><a href="/simple" aria-current="page">Simple finder</a><a href="/wizard">Guided wizard</a>
+      <a href="/">Home</a><a href="/simple" aria-current="page">Simple</a><a href="/select">Select</a><a href="/wizard">Guided wizard</a>
     </nav>
   </div>
 </header>
 
 <section class="band band-short">
   <div class="band-inner">
-    <h1>Pick what applies. Compare side by side.</h1>
-    <p>Choose any of the tiles below, in any order. Services that cannot work drop out, and the rest line up in columns.</p>
+    <h1>Choose services to compare.</h1>
+    <p>Browse every storage service the university offers. Select two or more, then choose Compare to see the details side by side.</p>
   </div>
 </section>
 
 <main class="shell">
-  <section class="panel picks" id="picks" aria-label="Filters"></section>
+  <section id="browse" aria-label="Storage services">
+    <div class="panel tools">
+      <div class="search">
+        <label for="q" class="sr">Search services</label>
+        <span class="search-ico" id="searchIco"></span>
+        <input id="q" type="search" placeholder="Search by name, vendor, or feature" autocomplete="off">
+      </div>
+      <div class="chipbar" id="chips" role="group" aria-label="Show only services that have"></div>
+      <p class="found" id="found" aria-live="polite"></p>
+    </div>
 
-  <section class="panel compare-panel" aria-label="Comparison">
-    <div class="cmp-bar">
-      <div class="cmp-count" id="count" aria-live="polite"></div>
-      <label class="switch"><input type="checkbox" id="hideApps"> Hide specialized tools</label>
-      <button class="btn btn-line" id="clearBtn" type="button">Clear all</button>
-      <button class="btn btn-line" id="printBtn" type="button"></button>
+    <ul class="svc-grid" id="tiles"></ul>
+
+    <div class="actionbar" id="actionbar">
+      <div class="ab-count" id="abCount" aria-live="polite">0 services selected</div>
+      <button class="btn btn-line" id="selAll" type="button">Select all shown</button>
+      <button class="btn btn-line" id="selNone" type="button">Clear selections</button>
+      <button class="btn btn-primary" id="goCompare" type="button" aria-disabled="true">Compare</button>
+    </div>
+  </section>
+
+  <section id="compareView" class="panel cv" hidden aria-label="Comparison">
+    <div class="cv-head">
+      <div>
+        <h2 id="cvTitle" tabindex="-1"></h2>
+        <p class="cv-sub">Highlighted rows show where the services differ in cost, backup, allowed data, size, or sharing.</p>
+      </div>
+      <div class="cv-actions">
+        <button class="btn btn-line" id="backBtn" type="button">Back to all services</button>
+        <button class="btn btn-line" id="printBtn" type="button"></button>
+      </div>
     </div>
     <div class="grid-wrap" id="grid"></div>
   </section>

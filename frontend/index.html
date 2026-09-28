@@ -20,7 +20,7 @@
       <span class="brand-text">Storage Finder<small>university.edu</small></span>
     </a>
     <nav class="topnav" aria-label="Main">
-      <a href="/" aria-current="page">Home</a><a href="/simple">Simple finder</a><a href="/wizard">Guided wizard</a>
+      <a href="/" aria-current="page">Home</a><a href="/simple">Simple</a><a href="/select">Select</a><a href="/wizard">Guided wizard</a>
     </nav>
   </div>
 </header>
@@ -36,15 +36,27 @@
   <div class="paths">
     <a class="path" href="/simple">
       <span class="path-ico" id="icoSimple"></span>
-      <h2>Simple finder</h2>
-      <p class="path-lead">Pick what applies, then compare services side by side.</p>
+      <h2>Simple</h2>
+      <p class="path-lead">Browse every service, tick the ones you like, and compare them.</p>
       <ul>
-        <li>Choose tiles in any order, or only the ones you care about</li>
-        <li>Services that cannot work are removed and choices that lead nowhere are grayed out</li>
-        <li>Every remaining service lines up in a column: cost, capacity, backup, allowed data</li>
+        <li>One card per service, with the attributes people search for</li>
+        <li>Search by name or feature, or narrow the cards with quick filters</li>
+        <li>Select two or more and choose Compare for a detailed side-by-side table</li>
       </ul>
-      <span class="btn btn-primary">Open the simple finder</span>
-      <span class="path-note">Best when you already know roughly what you need.</span>
+      <span class="btn btn-primary">Browse services</span>
+      <span class="path-note">Best when you want to see what exists.</span>
+    </a>
+    <a class="path" href="/select">
+      <span class="path-ico" id="icoSelect"></span>
+      <h2>Select</h2>
+      <p class="path-lead">Say what you need and see what fits.</p>
+      <ul>
+        <li>Pick your data classification, who needs access, size, backup, use and cost</li>
+        <li>Services that cannot work drop out, and choices that lead nowhere are grayed out</li>
+        <li>What remains lines up in columns</li>
+      </ul>
+      <span class="btn btn-primary">Open Select</span>
+      <span class="path-note">Best when you know your requirements.</span>
     </a>
     <a class="path" href="/wizard">
       <span class="path-ico" id="icoWizard"></span>
@@ -62,7 +74,7 @@
 
   <section class="about panel">
     <h2>How your data's classification decides what you can use</h2>
-    <p class="about-sub">Every service is approved for some classification levels and not others. Both tools use these three levels to rule out services that are not allowed to hold your data.</p>
+    <p class="about-sub">Every service is approved for some classification levels and not others. All three tools use these three levels to rule out services that are not allowed to hold your data.</p>
     <div class="levels" id="levels"></div>
     <p class="callout" id="note"></p>
     <p class="about-foot">This guide helps you choose; it is not a policy decision. Check with your IT support before storing sensitive or confidential data.</p>

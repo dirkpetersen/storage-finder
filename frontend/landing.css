@@ -1,4 +1,4 @@
-.paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+.paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
 .path {
   display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
   background: var(--card); color: inherit; text-decoration: none;

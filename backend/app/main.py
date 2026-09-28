@@ -55,7 +55,7 @@ def _page(name: str):
     return lambda: FileResponse(FRONTEND_DIR / name)
 
 
-for route, page in (("/", "index.html"), ("/simple", "simple.html"), ("/wizard", "wizard.html")):
+for route, page in (("/", "index.html"), ("/simple", "simple.html"), ("/select", "select.html"), ("/wizard", "wizard.html")):
     app.add_api_route(route, _page(page), include_in_schema=False)
 
 app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")

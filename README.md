@@ -17,7 +17,8 @@ uvicorn backend.app.main:app --reload
 Then open http://127.0.0.1:8000
 
 - `/` front page explaining the two tools
-- `/simple` pick tiles, compare matching services side by side
+- `/simple` browse a card per service, select some, and compare them in detail
+- `/select` pick your requirements; matching services line up side by side
 - `/wizard` six guided questions with a ranked recommendation
 
 The app reads its port from the `PORT` environment variable (default `8000`),
@@ -40,6 +41,6 @@ Deploy with `appmo add storage-finder <repo-url> main`.
 - `backend/app/data.py` — data classification levels and the storage option catalog
 - `backend/app/engine.py` — scoring/recommendation logic
 - `backend/app/main.py` — FastAPI app (serves the API and the static frontend)
-- `frontend/` — landing page, `simple.*`, `wizard.*`, shared `common.js`/`style.css` (plain HTML/CSS/JS, no build step)
+- `frontend/` — landing page, `simple.*`, `select.*`, `wizard.*`, shared `common.js`/`style.css` (plain HTML/CSS/JS, no build step)
 
 `POST /api/filter` returns the services that fit a partial set of answers plus, for every tile, how many services would remain if it were chosen. Tiles with zero are grayed out in both tools.

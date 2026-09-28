@@ -47,7 +47,7 @@ def recommend(answers: QuestionnaireAnswers) -> RecommendationResponse:
     excluded_count = 0
 
     for option in STORAGE_OPTIONS:
-        if answers.cost != "either" and option["pricing"] != answers.cost:
+        if answers.cost != "either" and option["pricing"] not in (answers.cost, "both"):
             excluded_count += 1
             continue
 
@@ -120,7 +120,7 @@ def recommend(answers: QuestionnaireAnswers) -> RecommendationResponse:
 def fits(option: dict, answers: dict) -> bool:
     """True if the option satisfies every answer given (unanswered = no constraint)."""
     cost = answers.get("cost")
-    if cost in ("quota", "paid") and option["pricing"] != cost:
+    if cost in ("quota", "paid") and option["pricing"] not in (cost, "both"):
         return False
     cls = answers.get("classification")
     if cls and option["classification_status"][cls] == "no":
