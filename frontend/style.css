@@ -39,7 +39,8 @@ body {
 h1, h2, h3, h4 { font-family: var(--display); margin: 0; letter-spacing: -0.015em; }
 
 :focus-visible {
-  outline: 3px solid var(--sun);
+  outline: 3px solid var(--black);
+  box-shadow: 0 0 0 6px var(--sun);
   outline-offset: 2px;
   border-radius: 6px;
 }
@@ -310,8 +311,6 @@ svg.i {
 .ring { display: block; }
 .ring .track { stroke: rgba(15,15,15,.1); }
 .ring .bar { stroke: var(--orange); stroke-dasharray: var(--c); stroke-dashoffset: var(--off); animation: fill .9s cubic-bezier(.2,.8,.2,1) both; }
-.ring.good .bar { stroke: #2fa356; }
-.ring.dim .bar { stroke: #8b9299; }
 .ring text { font-family: var(--display); font-weight: 800; fill: var(--ink); }
 .on-dark .ring .track { stroke: rgba(255,255,255,.16); }
 .on-dark .ring text { fill: #fff; }

@@ -109,7 +109,11 @@ async function init() {
   state.steps = buildSteps();
   $("brandMark").innerHTML = icon("layers");
   $("compareToggle").addEventListener("click", toggleCompare);
-  $("compareTop").addEventListener("click", () => { if ($("compareWrap").hidden) toggleCompare(); });
+  $("compareTop").addEventListener("click", (e) => {
+    e.preventDefault();
+    if ($("compareWrap").hidden) toggleCompare();
+    $("compare").scrollIntoView({ behavior: "smooth" });
+  });
   document.addEventListener("keydown", onKey);
 
   const fromHash = Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
@@ -124,7 +128,7 @@ async function init() {
 function renderStepper() {
   return `<ol class="stepper">${state.steps
     .map((s, i) => {
-      const cls = i < state.step || (state.editing && state.answers[s.key]) ? "done" : "";
+      const cls = state.answers[s.key] ? "done" : "";
       const now = i === state.step ? " now" : "";
       const clickable = cls === "done";
       return `<li class="${cls}${now}"><button type="button" ${clickable ? `data-go="${i}"` : "tabindex='-1'"} ${i === state.step ? 'aria-current="step"' : ""}>
@@ -149,13 +153,13 @@ function renderStep() {
     <div class="panel">
       ${renderStepper()}
       <div class="q">
-        <h2>${step.title}</h2>
+        <h2 tabindex="-1" id="qTitle">${step.title}</h2>
         <p class="sub">${step.sub}</p>
-        <div class="tiles" role="radiogroup" aria-label="${step.title}">
+        <div class="tiles">
           ${step.options
             .map(
               (o, n) => `
-            <button type="button" class="tile${o.value === selected ? " sel" : ""}" role="radio" aria-checked="${o.value === selected}" data-value="${o.value}">
+            <button type="button" class="tile${o.value === selected ? " sel" : ""}" aria-pressed="${o.value === selected}" data-value="${o.value}">
               <span class="key" aria-hidden="true">${n + 1}</span>
               <span class="ico">${icon(o.icon)}</span>
               <span class="t">${o.title}</span>
@@ -179,10 +183,12 @@ function renderStep() {
   $("backBtn").addEventListener("click", () => goTo(state.step - 1));
   const next = $("nextBtn");
   if (next) next.addEventListener("click", advance);
+  if (state.focusTitle) { $("qTitle").focus({ preventScroll: true }); state.focusTitle = false; }
 }
 
 function goTo(i) {
   state.step = Math.max(0, i);
+  state.focusTitle = true;
   renderStep();
 }
 
@@ -192,7 +198,7 @@ function choose(value) {
   document.querySelectorAll(".tile").forEach((t) => {
     const on = t.dataset.value === value;
     t.classList.toggle("sel", on);
-    t.setAttribute("aria-checked", on);
+    t.setAttribute("aria-pressed", on);
   });
   setTimeout(advance, 260);
 }
@@ -201,6 +207,7 @@ function advance() {
   if (!state.answers[state.steps[state.step].key]) return;
   if (state.editing || state.step === state.steps.length - 1) return showResults();
   state.step += 1;
+  state.focusTitle = true;
   renderStep();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -226,17 +233,16 @@ function ring(score, size, tone) {
   </svg>`;
 }
 
-const toneFor = (s) => (s >= 85 ? "good" : s >= 65 ? "" : "dim");
 const reasonsHtml = (r) => `<ul class="why">${r.map((x) => `<li>${icon("check")}<span>${x}</span></li>`).join("")}</ul>`;
 const notesHtml = (w) => (w.length ? `<ul class="notes">${w.map((x) => `<li>${icon("alert")}<span>${x}</span></li>`).join("")}</ul>` : "");
 
-function topPick(rec) {
+function topPick(rec, tied) {
   const o = rec.option;
   return `
   <article class="top-pick on-dark">
     <div>${ring(rec.score, 132, "")}</div>
     <div>
-      <span class="badge">${icon("star")} Best match</span>
+      <span class="badge">${icon("star")} ${tied ? "Tied for best" : "Best match"}</span>
       <h3>${o.name}</h3>
       ${o.vendor !== "—" ? `<div class="vendor">Powered by ${o.vendor}</div>` : `<div class="vendor">${o.category}</div>`}
       <p class="tag-line">${o.tagline}</p>
@@ -256,7 +262,7 @@ function altCard(rec) {
   const free = /^(free|none)/i.test(o.cost);
   return `
   <article class="alt">
-    <div>${ring(rec.score, 76, toneFor(rec.score))}</div>
+    <div>${ring(rec.score, 76, "")}</div>
     <div>
       <h4>${o.name}</h4>
       <div class="vendor">${o.vendor !== "—" ? `${o.vendor} · ` : ""}${o.category}</div>
@@ -274,6 +280,13 @@ function altCard(rec) {
       </div>
     </details>
   </article>`;
+}
+
+function excludedNote(n) {
+  if (!n) return "";
+  const many = n > 1;
+  const limit = state.answers.department === "general" ? ` or ${many ? "are" : "is"} limited to engineering` : "";
+  return `<p class="excluded">${n} service${many ? "s were" : " was"} left out because ${many ? "they aren't" : "it isn't"} available for ${state.answers.classification} data${limit}.</p>`;
 }
 
 async function showResults() {
@@ -304,17 +317,17 @@ async function showResults() {
     <div class="panel">
       <div class="res-head">
         <h2>Your best storage match: ${best.option.name}</h2>
-        <p>Ranked from ${data.recommendations.length} services that fit your answers. Select an answer to change it.</p>
+        <p>Ranked from ${data.recommendations.length} services that fit your answers. Click a chip to change an answer.</p>
         <div class="chips">${chips}</div>
         <div class="res-actions">
           <button type="button" class="btn btn-line" id="restartBtn">Start over</button>
           <button type="button" class="btn btn-line" id="printBtn">${icon("print")} Print or save as PDF</button>
         </div>
       </div>
-      ${topPick(best)}
+      ${topPick(best, rest[0] && rest[0].score === best.score)}
       ${shown.length ? `<div class="alts-head"><h3>Other good options</h3></div><div class="alts">${shown.map(altCard).join("")}</div>` : ""}
       ${hidden.length ? `<div class="more"><button type="button" class="btn btn-quiet" id="moreBtn">Show ${hidden.length} more</button></div><div class="alts" id="moreAlts" hidden>${hidden.map(altCard).join("")}</div>` : ""}
-      ${data.excluded_count ? `<p class="excluded">${data.excluded_count} service${data.excluded_count > 1 ? "s were" : " was"} left out because ${data.excluded_count > 1 ? "they don't" : "it doesn't"} allow ${state.answers.classification} data or ${data.excluded_count > 1 ? "are" : "is"} limited to another department.</p>` : ""}
+      ${excludedNote(data.excluded_count)}
     </div>`;
 
   box.querySelectorAll("[data-edit]").forEach((b) =>

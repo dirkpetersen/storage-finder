@@ -81,5 +81,5 @@ def recommend(answers: QuestionnaireAnswers) -> RecommendationResponse:
             Recommendation(option=option, score=score, reasons=reasons, warnings=warnings)
         )
 
-    scored.sort(key=lambda r: r.score, reverse=True)
+    scored.sort(key=lambda r: (-r.score, len(r.warnings)))
     return RecommendationResponse(recommendations=scored, excluded_count=excluded_count)
