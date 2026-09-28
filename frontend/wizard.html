@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guided wizard — Storage Finder</title>
+<meta name="description" content="Answer a few questions and find the right university storage for your data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="./" aria-label="Storage Finder home">
+      <span class="mark" id="brandMark"></span>
+      <span class="brand-text">Storage Finder<small>university.edu</small></span>
+    </a>
+    <nav class="topnav" aria-label="Main">
+      <a href="/">Home</a><a href="/simple">Simple finder</a><a href="/wizard" aria-current="page">Guided wizard</a>
+    </nav>
+  </div>
+</header>
+
+<section class="band">
+  <div class="band-inner">
+    <h1>Find the right home for your data.</h1>
+    <p>Answer six quick questions. We match your data's classification, size, and sharing needs to the storage services the university offers.</p>
+  </div>
+</section>
+
+<main class="shell">
+  <div id="wizard" class="wizard"></div>
+  <div id="results" class="results" hidden></div>
+
+  <section class="compare" id="matrix">
+    <div class="compare-head">
+      <h2>What data can I keep where?</h2>
+      <button class="btn btn-quiet" id="matrixToggle" aria-expanded="false" aria-controls="matrixWrap">Show table</button>
+    </div>
+    <div class="compare-wrap" id="matrixWrap" hidden></div>
+  </section>
+
+  <section class="compare" id="compare">
+    <div class="compare-head">
+      <h2>Compare every service</h2>
+      <button class="btn btn-quiet" id="compareToggle" aria-expanded="false" aria-controls="compareWrap">Show table</button>
+    </div>
+    <div class="compare-wrap" id="compareWrap" hidden></div>
+  </section>
+</main>
+
+<footer class="foot">
+  This guide helps you choose; it is not a policy decision. If you are unsure how to classify your data, or want to store confidential data, check with your IT support first.
+</footer>
+
+<script src="/static/common.js"></script>
+<script src="/static/wizard.js"></script>
+</body>
+</html>

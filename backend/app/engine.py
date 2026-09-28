@@ -1,5 +1,28 @@
+from typing import get_args
+
 from .data import STORAGE_OPTIONS
-from .schemas import QuestionnaireAnswers, Recommendation, RecommendationResponse
+from .schemas import (
+    Audience,
+    BackupNeed,
+    Classification,
+    DataVolume,
+    Department,
+    FilterResponse,
+    PartialAnswers,
+    Purpose,
+    QuestionnaireAnswers,
+    Recommendation,
+    RecommendationResponse,
+)
+
+CHOICES = {
+    "department": get_args(Department),
+    "classification": get_args(Classification),
+    "audience": get_args(Audience),
+    "volume": get_args(DataVolume),
+    "backup": get_args(BackupNeed),
+    "purpose": get_args(Purpose),
+}
 
 VOLUME_LABELS = {
     "small": "under 25 GB",
@@ -42,9 +65,9 @@ def recommend(answers: QuestionnaireAnswers) -> RecommendationResponse:
             reasons.append(f"Approved for {answers.classification} data.")
         else:
             score += 15
+            review = option.get("review_note") or "requires IT security review and approval"
             warnings.append(
-                f"{option['short_name']} allows {answers.classification} data, but requires IT "
-                "security review/approval first."
+                f"{option['short_name']} can hold {answers.classification} data, but {review} first."
             )
 
         if answers.audience in option["audiences"]:
@@ -77,9 +100,45 @@ def recommend(answers: QuestionnaireAnswers) -> RecommendationResponse:
         else:
             score += 5
 
+        if option.get("kind") == "application":
+            score -= 20
+            warnings.append(f"Specialized service: {option['specialty']}.")
+
         scored.append(
             Recommendation(option=option, score=score, reasons=reasons, warnings=warnings)
         )
 
     scored.sort(key=lambda r: (-r.score, len(r.warnings)))
     return RecommendationResponse(recommendations=scored, excluded_count=excluded_count)
+
+
+def fits(option: dict, answers: dict) -> bool:
+    """True if the option satisfies every answer given (unanswered = no constraint)."""
+    dept = answers.get("department")
+    if dept and option["department_restricted"] and option["department_restricted"] != dept:
+        return False
+    cls = answers.get("classification")
+    if cls and option["classification_status"][cls] == "no":
+        return False
+    if answers.get("audience") and answers["audience"] not in option["audiences"]:
+        return False
+    if answers.get("volume") and answers["volume"] not in option["volumes"]:
+        return False
+    if answers.get("backup") == "auto" and not option["backup_available"]:
+        return False
+    if answers.get("purpose") and answers["purpose"] not in option["purposes"]:
+        return False
+    return True
+
+
+def filter_options(partial: PartialAnswers) -> FilterResponse:
+    answers = {k: v for k, v in partial.model_dump().items() if v}
+    matches = [o for o in STORAGE_OPTIONS if fits(o, answers)]
+    availability = {
+        key: {
+            value: sum(fits(o, {**answers, key: value}) for o in STORAGE_OPTIONS)
+            for value in values
+        }
+        for key, values in CHOICES.items()
+    }
+    return FilterResponse(matches=matches, availability=availability)

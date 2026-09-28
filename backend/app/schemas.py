@@ -19,12 +19,24 @@ class QuestionnaireAnswers(BaseModel):
     purpose: Purpose
 
 
+class PartialAnswers(BaseModel):
+    department: Department | None = None
+    classification: Classification | None = None
+    audience: Audience | None = None
+    volume: DataVolume | None = None
+    backup: BackupNeed | None = None
+    purpose: Purpose | None = None
+
+
 class StorageOption(BaseModel):
     id: str
     name: str
     short_name: str
     vendor: str
     category: str
+    kind: Literal["storage", "application"] = "storage"
+    specialty: str | None = None
+    review_note: str | None = None
     tagline: str
     description: str
     cost: str
@@ -51,3 +63,8 @@ class Recommendation(BaseModel):
 class RecommendationResponse(BaseModel):
     recommendations: list[Recommendation]
     excluded_count: int
+
+
+class FilterResponse(BaseModel):
+    matches: list[StorageOption]
+    availability: dict[str, dict[str, int]]

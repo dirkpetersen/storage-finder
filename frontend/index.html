@@ -4,48 +4,72 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Storage Finder — university.edu</title>
-<meta name="description" content="Answer a few questions and find the right university storage for your data.">
+<meta name="description" content="Find the right university storage for your files and research data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/landing.css">
 </head>
 <body>
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="./" aria-label="Storage Finder home">
+    <a class="brand" href="/" aria-label="Storage Finder home">
       <span class="mark" id="brandMark"></span>
       <span class="brand-text">Storage Finder<small>university.edu</small></span>
     </a>
-    <a class="toplink" href="#compare" id="compareTop">Compare all services</a>
+    <nav class="topnav" aria-label="Main">
+      <a href="/" aria-current="page">Home</a><a href="/simple">Simple finder</a><a href="/wizard">Guided wizard</a>
+    </nav>
   </div>
 </header>
 
 <section class="band">
   <div class="band-inner">
-    <h1>Find the right home for your data.</h1>
-    <p>Answer six quick questions. We match your data's classification, size, and sharing needs to the storage services the university offers.</p>
+    <h1>Where should your files and research data live?</h1>
+    <p>Storage Finder compares the storage services available to you (Box, OneDrive, SharePoint, shared drives, Tier 1, 2 and 3 research storage, and more) against the sensitivity of your data, who needs access, how much you have, and whether it needs a backup.</p>
   </div>
 </section>
 
 <main class="shell">
-  <div id="wizard" class="wizard"></div>
-  <div id="results" class="results" hidden></div>
+  <div class="paths">
+    <a class="path" href="/simple">
+      <span class="path-ico" id="icoSimple"></span>
+      <h2>Simple finder</h2>
+      <p class="path-lead">Pick what applies, then compare services side by side.</p>
+      <ul>
+        <li>Choose tiles in any order, or only the ones you care about</li>
+        <li>Services that cannot work are removed and choices that lead nowhere are grayed out</li>
+        <li>Every remaining service lines up in a column: cost, capacity, backup, allowed data</li>
+      </ul>
+      <span class="btn btn-primary">Open the simple finder</span>
+      <span class="path-note">Best when you already know roughly what you need.</span>
+    </a>
+    <a class="path" href="/wizard">
+      <span class="path-ico" id="icoWizard"></span>
+      <h2>Guided wizard</h2>
+      <p class="path-lead">Answer six questions and get a ranked recommendation.</p>
+      <ul>
+        <li>One question at a time, with examples to help you decide</li>
+        <li>A best match, other good options, and a plain-language reason for each</li>
+        <li>A link you can share and a print view for your records</li>
+      </ul>
+      <span class="btn btn-primary">Start the wizard</span>
+      <span class="path-note">Best when you are not sure where to start.</span>
+    </a>
+  </div>
 
-  <section class="compare" id="compare">
-    <div class="compare-head">
-      <h2>Compare every service</h2>
-      <button class="btn btn-quiet" id="compareToggle" aria-expanded="false" aria-controls="compareWrap">Show table</button>
-    </div>
-    <div class="compare-wrap" id="compareWrap" hidden></div>
+  <section class="about panel">
+    <h2>How your data's classification decides what you can use</h2>
+    <p class="about-sub">Every service is approved for some classification levels and not others. Both tools use these three levels to rule out services that are not allowed to hold your data.</p>
+    <div class="levels" id="levels"></div>
+    <p class="callout" id="note"></p>
+    <p class="about-foot">This guide helps you choose; it is not a policy decision. Check with your IT support before storing sensitive or confidential data.</p>
   </section>
 </main>
 
-<footer class="foot">
-  This guide helps you choose; it is not a policy decision. If you are unsure how to classify your data, or want to store confidential data, check with your IT support first.
-</footer>
-
-<script src="app.js"></script>
+<script src="/static/common.js"></script>
+<script src="/static/landing.js"></script>
 </body>
 </html>

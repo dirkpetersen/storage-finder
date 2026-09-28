@@ -76,7 +76,8 @@ svg.i {
 }
 .brand-text { font-family: var(--display); font-weight: 700; font-size: 19px; line-height: 1.05; }
 .brand-text small { display: block; font-family: var(--body); font-weight: 500; font-size: 12.5px; color: #a9a9a9; margin-top: 2px; }
-.toplink { color: #e8e8e8; font-weight: 600; font-size: 14.5px; text-decoration: none; padding: 8px 4px; border-bottom: 2px solid transparent; }
+.topnav { display: flex; gap: 6px; }
+.topnav a, .toplink { color: #e8e8e8; font-weight: 600; font-size: 14.5px; text-decoration: none; padding: 8px 4px; border-bottom: 2px solid transparent; }
 .toplink:hover { border-bottom-color: var(--orange-hi); }
 
 /* ---------- hero band ---------- */
@@ -361,3 +362,22 @@ table.cmp { border-collapse: separate; border-spacing: 0; width: 100%; font-size
   body { background: #fff; }
   .panel { box-shadow: none; border: 0; }
 }
+
+/* ---------- nav, callouts, disabled tiles ---------- */
+.topnav a { color: #e8e8e8; font-weight: 600; font-size: 14.5px; text-decoration: none; padding: 8px 10px; border-bottom: 2px solid transparent; }
+.topnav a:hover { border-bottom-color: var(--orange-hi); }
+.topnav a[aria-current="page"] { border-bottom-color: var(--orange); color: #fff; }
+.callout {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin: 18px 0 0; padding: 12px 14px;
+  background: #e8f4f9; border: 1px solid #b5dbe8; border-radius: var(--r-sm);
+  color: #0b4a63; font-size: 14.5px;
+}
+.callout .i { margin-top: 3px; flex: none; }
+.tile:disabled, .tile:disabled:hover {
+  cursor: not-allowed; transform: none; box-shadow: none;
+  background: #f1f2f4; border-color: #e3e5e8; border-style: dashed; color: #9aa0a6;
+}
+.tile:disabled .ico { background: #e6e8ea; border-color: #dcdfe2; color: #a9aeb3; }
+.tile:disabled .d, .tile:disabled .eg { color: #a9aeb3; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
